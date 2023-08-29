@@ -1,19 +1,10 @@
-const path = require('path');
+
+const productController = require('../controllers/products');
 const express = require('express');
 
-
-
-const rootdir = require('../util/path'); // Correct the import path
 const router = express.Router();
 
-router.get('/contactus',(req,res,next)=>{
-    res.sendFile(path.join(rootdir,'backrnd','views','Contactus.html'))
-});
-
-router.post('/contactus',(req,res,next)=>{
-    console.log(req.body);
-    res.redirect('/success');
-
-})
+router.get('/contactus', productController.getUserData);
+router.post('/contactus', productController.postUserData);
 
 module.exports = router;
