@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contactus</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <style>
+        #main{
+            background-color: aquamarine;
+        }
+        #name{
+            width: 70%;
+            margin: 2rem;
+        }
+        #email{
+            width: 70%;
+            margin: 2rem; 
+        }
+        .btn{
+            text-align: center;
+            margin: 2%;
+        }
+        button{
+    font: inherit;
+    border: 1px solid #dbc441;
+    color: #dbc441;
+    background: white;
+    border-radius: 3px;
+    cursor: pointer;
+    text-align: center;
+}
+
+button:hover,
+button:active{
+    background-color: #6200ff;
+    color: white;
+}
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-header_nav">
+            <ul class="main-header_item_List">
+                <li class="main-header_item"><a  href="/">Shop</a></li>
+                <li class="main-header_item"><a  href="/admin/add-product">Add Product</a></li>
+                <li class="main-header_item"><a class="active" href="/contactus">Contact us</a></li>
+                <li class="main-header_item"><a href="/success">Success</a></li>
+            </ul>
+        </nav>
+    </header>
+
+<main>
+   <form action="/contactus" method="POST">
+    
+        <div id="main">
+            <fieldset>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" ><br>
+            <label for="Email">Email:</label>
+            <input type="email" id="email" name="email">
+        </fieldset>
+        </div>
+    
+    <div class="btn">    
+        <button type="submit">Book Sloat</button>
+    </div>
+
+   </form>
+</main>
+    
+</body>
+</html>
