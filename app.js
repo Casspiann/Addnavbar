@@ -4,11 +4,13 @@ const bodyParser = require('body-parser');
 const app = express();
 
 const errorController = require('./controllers/error');
+const db = require("./util/database");
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 const adminRoute = require('./routes/admin');
 const shopRoute = require('./routes/shop');
+
 //const contactusRoute = require('./routes/Contactus');
 //const successRoute = require('./routes/Success');
  // Ensure this is the last route
