@@ -57,7 +57,7 @@ module.exports = class Product {
         })
     } 
 
-}*/
+}*//*
 
 const db= require('../util/database');
 module.exports = class Product {
@@ -91,3 +91,32 @@ module.exports = class Product {
     
   }
 };
+*/const Sequelize = require('sequelize');
+const sequelize = require('../util/database');
+
+const Product = sequelize.define('product', {
+    id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true
+    },
+    title: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    price: {
+        type: Sequelize.DECIMAL(10, 2), // Assuming a decimal data type with 10 total digits and 2 decimal places
+        allowNull: false
+    },
+    imageUrl: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    description: {
+        type: Sequelize.STRING,
+        allowNull: false
+    }
+});
+
+module.exports = Product;
