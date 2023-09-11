@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const errorController = require('./controllers/error');
 const sequelize = require("./util/database");
 
+
 var cors = require('cors');
 
 const app = express();
@@ -17,7 +18,8 @@ app.set('views', 'views');
 
 const adminRoute = require('./routes/admin');
 const shopRoute = require('./routes/shop');
-const userRoutes = require('./routes/user')
+const userRoutes = require('./routes/user');
+const expensRoutes = require('./routes/expens');
 
 
 
@@ -27,6 +29,7 @@ app.use(express.static(path.join(__dirname,'public')));
 app.use('/admin', adminRoute);
 app.use(shopRoute);
 app.use('/user',userRoutes);
+app.use('/expenses',expensRoutes);
 
 
 
