@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 
 const errorController = require('./controllers/error');
 const sequelize = require("./util/database");
+const Product = require('./models/product');
+const User = require('./models/user');
 
 
 var cors = require('cors');
@@ -21,10 +23,20 @@ const shopRoute = require('./routes/shop');
 const userRoutes = require('./routes/user');
 const expensRoutes = require('./routes/expens');
 
+Product.belongsTo(User,{constraints:true,onDelete:'CASCADE'});
+User.hasMany(Product);
+
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname,'public')));
+
+app.use((req,res,next)=>{
+  User.findByPk(1).then(user=>{
+    req.user = user;
+    next();
+  }).catch(error=>{console.log(error)});
+})
 
 app.use('/admin', adminRoute);
 app.use(shopRoute);
@@ -43,8 +55,9 @@ app.use('/expenses',expensRoutes);
 // Error handling middleware (should be the last)
 app.use(errorController.get404);
 
-sequelize.sync().then((result)=>{
-  console.log(result);
+sequelize.sync()
+.then((result)=>{
+  //console.log(result);
   app.listen(3000);
 }).catch(err=>{
   console.log(err);
