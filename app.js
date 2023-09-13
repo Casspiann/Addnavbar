@@ -6,6 +6,8 @@ const errorController = require('./controllers/error');
 const sequelize = require("./util/database");
 const Product = require('./models/product');
 const User = require('./models/user');
+const Cart = require('./models/cart');
+const cartItem = require('./models/cart-Item');
 
 
 var cors = require('cors');
@@ -23,8 +25,7 @@ const shopRoute = require('./routes/shop');
 const userRoutes = require('./routes/user');
 const expensRoutes = require('./routes/expens');
 
-Product.belongsTo(User,{constraints:true,onDelete:'CASCADE'});
-User.hasMany(Product);
+
 
 
 
@@ -54,11 +55,33 @@ app.use('/expenses',expensRoutes);
 
 // Error handling middleware (should be the last)
 app.use(errorController.get404);
-
+Product.belongsTo(User,{constraints:true,onDelete:'CASCADE'});
+User.hasMany(Product);
+User.hasOne(Cart);
+Cart.belongsTo(User);
+Cart.belongsToMany(Product, {
+  through: cartItem, // Specify the intermediary model
+  //foreignKey: 'cartId', // Name of the foreign key in the CartItem table that references Cart
+});
+Product.belongsToMany(Cart, {
+  through: cartItem, // Specify the intermediary model
+  //foreignKey: 'productId', // Name of the foreign key in the CartItem table that references Product
+})
 sequelize.sync()
-.then((result)=>{
-  //console.log(result);
-  app.listen(3000);
+.then(result => {
+  // Create a cart for the user
+  return User.findByPk(1);
+})
+.then(user => {
+  if (!user) {
+    throw new Error('User not found.');
+  }
+  return user.createCart();
+})
+.then(cart => {
+  app.listen(3000, () => {
+    console.log('Server is running on port 3000');
+  });
 }).catch(err=>{
   console.log(err);
   app.listen(3000);
